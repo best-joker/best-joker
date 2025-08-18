@@ -35,6 +35,7 @@ jobs:
 
       - name: Setup Vivia Theme
         run: |
+          rm -rf themes/vivia
           mkdir -p themes
           cp -r node_modules/hexo-theme-vivia themes/vivia
 
