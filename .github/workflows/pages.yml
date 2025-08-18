@@ -33,6 +33,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Setup Vivia Theme
+        run: |
+          mkdir -p themes
+          cp -r node_modules/hexo-theme-vivia themes/vivia
+
       - name: Build Hexo
         run: |
           npm run clean

@@ -45,3 +45,6 @@ Desktop.ini
 
 # 主题的依赖包（如果主题有的话）
 themes/*/node_modules/
+
+# 主题目录（由GitHub Actions自动生成）
+themes/vivia/
