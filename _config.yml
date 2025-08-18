@@ -12,7 +12,8 @@ timezone: Asia/Shanghai             # 时区设置
 # ===============================
 # URL配置
 # ===============================
-url: https://best-joker.github.io   # 网站URL（部署时需要修改为实际域名）
+url: https://best-joker.github.io/best-joker   # 网站URL（部署时需要修改为实际域名）
+root: /best-joker/   # 添加根路径配置
 permalink: ':year/:month/:day/:title/'  # 文章永久链接格式
 permalink_defaults: null            # 永久链接默认值
 pretty_urls:                        # 美化URL设置
