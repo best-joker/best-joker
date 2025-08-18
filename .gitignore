@@ -1,0 +1,47 @@
+# Hexo 博客项目的 .gitignore 文件
+
+# 依赖包目录
+node_modules/
+
+# 生成的静态文件
+public/
+
+# 日志文件
+*.log
+
+# 数据库文件
+db.json
+
+# 临时文件
+.tmp/
+.cache/
+
+# 编辑器配置文件
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系统文件
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 环境变量文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 压缩包
+*.zip
+*.tar.gz
+*.rar
+
+# 草稿文件夹（如果你不想提交草稿）
+# source/_drafts/
+
+# 主题的依赖包（如果主题有的话）
+themes/*/node_modules/
