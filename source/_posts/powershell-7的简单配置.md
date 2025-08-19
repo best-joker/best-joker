@@ -18,11 +18,11 @@ photos:
 
 ## 起因
 
-`Windows`平台下的默认的终端是究极远古老祖`cmd`和`powershell 5`（一下简称PS）。后来本人在一次偶然的情况遇上了`PS 7`。
+`Windows`平台下的默认的终端是究极远古老祖`cmd`和`powershell 5`（以下简称`PS`）。后来本人在一次偶然的情况遇上了`PS 7`。
 
 因为up主在`vscode`中使用copilot的时候，能够实现在输入部分不完整指令的情况下，能够出现指令的待选列表，就像是code时，`IDE`提供的`LSP`补全一样，非常好的好用(‾◡◝)
 
-<img src="./powershell-7的简单配置/终端代码待选.png" style="zoom: 67%;" />
+![终端代码待选](images/PowerShell-7的简单配置/powershell-terminal-suggestion.png)
 
 但是up在后来使用`cursor`的时候却发现，同样在启用`terminal.integrated.suggest.enabled`设置时，我的`cursor`却不能够正常开启该功能🥲
 
