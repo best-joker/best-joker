@@ -1,6 +1,8 @@
 ---
 title: WSL2网络代理小Tips
 date: 2025-08-24 17:24:07
+categories:
+  - 工具配置
 tags:
   - WSL2
   - 网络代理

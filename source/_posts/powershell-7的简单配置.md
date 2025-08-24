@@ -3,7 +3,6 @@ title: "PowerShell 7的简单配置"
 # date: 2024-01-01 12:00:00
 date: 2025-08-19 21:06:00
 categories:
-  - 技术分享
   - 工具配置
 tags:
   - PowerShell
