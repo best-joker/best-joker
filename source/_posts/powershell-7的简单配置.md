@@ -8,7 +8,6 @@ tags:
   - PowerShell
   - 终端
   - 配置
-  - 工具
 photos:
 #   - /images/小丑.jpg
 ---
@@ -94,7 +93,7 @@ function Disable-EnvProxy {
 Enable-EnvProxy
 
 # posh主题
-#oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\iterm2.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\agnoster.minimal.omp.json" | Invoke-Expression
 ```
 
 
