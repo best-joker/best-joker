@@ -26,7 +26,7 @@ photos:
 
 1. 选中侧边栏中的`覆写`选项卡，新建或者导入一个`yaml`格式文件。
 
-   [up个人自用的文件]([best-joker/clash-meta_override_files: 这是一个用于clash meta的覆写文件，为微软服务走代理。能够使用copilot等功能](https://github.com/best-joker/clash-meta_override_files))
+   [up个人自用的文件](https://github.com/best-joker/clash-meta_override_files)
 
    ~因为是自己改的，所以可能会有点问题_(:з)∠)_~
 
@@ -41,7 +41,7 @@ photos:
 3. 然后更新当前代理组
 
 
-虽然能够有其他的AI客户端进行代替，并且`copilot`不再是当初那种深度集成系统，能够直接更改系统的AI助手，但是目前个人感觉，既然Microsoft为我们准备了这个“原生”的AI助手，体验一下也无伤大雅。§(*￣▽￣*)§
+虽然能够有其他的AI客户端进行代替，并且`copilot`不再是当初那种深度集成系统，能够直接更改系统的AI助手，但是目前个人感觉，既然`Microsoft`为我们准备了这个“原生”的AI助手，体验一下也无伤大雅。§(*￣▽￣*)§
 
-up最常用的就是`Alt + Space`组合键，将它置顶在最上方悬浮层。以及Edge中的copilot助手侧边栏。能够快速读取web内容😋。
+up最常用的就是`Alt + Space`组合键，将它置顶在最上方悬浮层。以及`Edge`中的`copilot`助手侧边栏。能够快速读取web内容😋。
 
