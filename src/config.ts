@@ -17,7 +17,8 @@ export const siteConfig: SiteConfig = {
 	},
 	banner: {
 		enable: true,
-		src: "assets/images/波奇 (2).jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+		// src: "assets/images/波奇 (2).jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+		src: "assets/images/windows娘3.jpg",
 		position: "center", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
 		credit: {
 			enable: false, // Display the credit text of the banner image
@@ -53,7 +54,7 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "assets/images/小丑.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	avatar: "assets/images/Windows娘.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "无敌joker",
 	bio: "invincible太长了<br>英文改成best (*^_^*)",
 	links: [
