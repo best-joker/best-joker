@@ -1,6 +1,6 @@
 ---
 title: WSL2网络代理小Tips
-published: 2025-10-01
+published: 2025-08-24
 description: '这是有关WSL2网络代理小Tips的文章'
 image: ''
 tags: [WSL2,网络代理,小技巧]
