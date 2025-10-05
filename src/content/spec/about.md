@@ -1,9 +1,32 @@
-# About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
+# 关于我 (●'◡'●)
 
-::github{repo="saicaca/fuwari"}
+你好！我是 **best-joker**！✨
 
-> ### Sources of images used in this site
-> - [Unsplash](https://unsplash.com/)
-> - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
-> - [Rabbit - v1.4 Showcase](https://civitai.com/posts/586908) by [Rabbit_YourMajesty](https://civitai.com/user/Rabbit_YourMajesty)
+> 在编程方面我还是个微不足道的新手 OwO
+
+~因为我还是个学生，专业能力有所不足，所以博客中的内容可能会有所欠缺，产生错误。🥲~
+
+## 关于这个博客 (｡◕‿◕｡)
+
+这里是我的个人博客，记录着我在编程学习路上的点点滴滴～ 
+
+**invincible** 太长了，所以英文改成 **best** (*^_^*)
+
+## 我的兴趣爱好 ヾ(≧▽≦*)o
+
+- 🎮 **游戏**: 经常在Steam上探索各种有趣的游戏
+- 📺 **Bilibili**: 喜欢看各种技术分享和有趣的视频
+- 💻 **编程**: 努力学习编程中 (ノ｀Д)ノ
+- 🌟 **学习**: 每天都在进步一点点 (๑•̀ㅂ•́)و✧
+
+## 联系我 ♪(´▽｀)
+
+你可以在这些地方找到我：
+
+- 🐙 [GitHub](https://github.com/best-joker) - 我的代码仓库
+- 📺 [Bilibili](https://bilibili.com) - 看视频学习
+- 🎮 [Steam](https://store.steampowered.com) - 游戏时光
+
+---
+
+*感谢你访问我的博客！希望我们能一起在编程的道路上成长！* (◕‿◕)♡
