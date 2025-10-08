@@ -24,10 +24,38 @@ import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 
+// 检测部署环境
+const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
+const isNetlify = process.env.NETLIFY === 'true';
+
+// 根据环境配置站点信息
+const getSiteConfig = () => {
+	if (isGitHubPages) {
+		return {
+			site: "https://best-joker.github.io/",
+			base: "/best-joker/",
+		};
+	} else if (isNetlify) {
+		return {
+			// site: "https://your-site-name.netlify.app/", // 替换为您的 Netlify 域名
+			site: "https://best-joker-blog.netlify.app/", // 替换为您的 Netlify 域名
+			base: undefined,
+		};
+	} else {
+		// 本地开发环境
+		return {
+			site: "http://localhost:4321/",
+			base: undefined,
+		};
+	}
+};
+
+const siteConfig = getSiteConfig();
+
 // https://astro.build/config
 export default defineConfig({
-	site: "https://best-joker.github.io/",
-	base: "/best-joker/",
+	site: siteConfig.site,
+	base: siteConfig.base,
 	trailingSlash: "always",
 	integrations: [
 		tailwind({

@@ -30,3 +30,9 @@ yarn.lock
 .idea
 *.iml
 .vscode
+
+# doc
+README-DEPLOYMENT.md
+
+# 测试部署脚本
+scripts/
