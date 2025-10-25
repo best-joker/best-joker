@@ -13,7 +13,7 @@
     "new-post": "node scripts/new-post.js",
     "format": "biome format --write ./src",
     "lint": "biome check --write ./src",
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "echo '💡 建议: 使用 \"pnpm install\" 以获得最佳体验和兼容性' || true",
     "deploy:github": "./scripts/deploy-github.sh",
     "deploy:netlify": "./scripts/deploy-netlify.sh",
     "deploy:local": "./scripts/deploy-local.sh"
