@@ -2,6 +2,11 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import axios from 'axios'
 
+function getEventName(): string {
+  const ctx: any = (github as any).context as any
+  return ctx.eventName || ctx.event_name || ''
+}
+
 async function run(): Promise<void> {
   try {
     // 获取输入参数
@@ -28,7 +33,8 @@ async function run(): Promise<void> {
 function extractPromptFromContext(): string {
   const context = github.context
 
-  if (context.eventName === 'issue_comment' || context.eventName === 'pull_request_review_comment') {
+  const eventName = getEventName()
+  if (eventName === 'issue_comment' || eventName === 'pull_request_review_comment') {
     const commentBody = context.payload.comment?.body || ''
 
     // 检查是否包含@claude提及
@@ -64,7 +70,7 @@ async function callGLMApi(
 - 仓库名: ${github.context.payload.repository?.full_name}
 - 分支: ${github.context.ref}
 - 提交者: ${github.context.actor}
-- 事件类型: ${github.context.event_name}
+- 事件类型: ${getEventName()}
 
 请根据用户的请求提供帮助，包括但不限于：
 - 代码审查和建议
@@ -114,11 +120,12 @@ async function handleResponse(response: string, githubToken: string): Promise<vo
   core.info(`📝 GLM Response: ${response.substring(0, 200)}...`)
 
   // 根据事件类型决定如何处理响应
-  if (context.eventName === 'issue_comment') {
+  const eventName = getEventName()
+  if (eventName === 'issue_comment') {
     await replyToIssueComment(octokit, response)
-  } else if (context.eventName === 'pull_request_review_comment') {
+  } else if (eventName === 'pull_request_review_comment') {
     await replyToPRComment(octokit, response)
-  } else if (context.eventName === 'pull_request') {
+  } else if (eventName === 'pull_request') {
     await replyToPR(octokit, response)
   } else {
     // 对于其他事件类型，作为输出日志

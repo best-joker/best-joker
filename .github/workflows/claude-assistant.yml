@@ -40,7 +40,7 @@ jobs:
         uses: ./.github/actions/glm-assistant
         with:
           glm_api_key: ${{ secrets.GLM_API_KEY }}
-          model: 'glm-4'
+          model: 'glm-4.6'
           max_tokens: '2000'
           github_token: ${{ github.token }}
 
@@ -70,7 +70,7 @@ jobs:
         uses: ./.github/actions/glm-assistant
         with:
           glm_api_key: ${{ secrets.GLM_API_KEY }}
-          model: 'glm-4'
+          model: 'glm-4.6'
           max_tokens: '3000'
           github_token: ${{ github.token }}
           prompt: "请对这个Pull Request进行全面的代码审查，包括代码质量、安全性、性能和最佳实践方面的建议。"
