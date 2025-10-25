@@ -159,13 +159,58 @@ runs:
         echo "EOF" >> $GITHUB_OUTPUT
 
         echo "success=$SUCCESS" >> $GITHUB_OUTPUT
+        echo "branch_created=" >> $GITHUB_OUTPUT
+        echo "pr_created=" >> $GITHUB_OUTPUT
 
         # Clean up
         rm -rf "$WORK_DIR"
 
-    - name: Output Response
+    - name: Create GitHub Comment
       if: steps.glm.outputs.success == 'true'
       shell: bash
       run: |
         echo "🤖 GLM 4.6 Response:"
         echo "${{ steps.glm.outputs.response }}"
+
+        # 获取Issue/PR编号
+        ISSUE_NUMBER=""
+        if [ "${{ github.event_name }}" == "issue_comment" ]; then
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
+        elif [ "${{ github.event_name }}" == "issues" ]; then
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
+        elif [ "${{ github.event_name }}" == "pull_request_review_comment" ]; then
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
+        elif [ "${{ github.event_name }}" == "pull_request_review" ]; then
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
+        fi
+
+        if [ -n "$ISSUE_NUMBER" ]; then
+          echo "Creating comment on Issue/PR #$ISSUE_NUMBER"
+
+          # 构造评论内容
+          COMMENT_BODY="## 🤖 GLM 4.6 助手回复
+
+        **@${{ github.actor }}**，GLM 已经分析了您的问题：
+
+        ${{ steps.glm.outputs.response }}
+
+        ---
+
+        *💬 由 GLM-4.6 智能助手生成*
+        *🔧 [查看工作流详情](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})*
+        *📝 [GLM Code Action](https://github.com/best-joker/best-joker) 源码*"
+
+          # 调用GitHub API创建评论
+          curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"body\": $(echo "$COMMENT_BODY" | jq -R -s '.')
+            }" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER/comments"
+
+          echo "✅ Comment created successfully on Issue/PR #$ISSUE_NUMBER"
+        else
+          echo "❌ Could not determine Issue/PR number"
+        fi
