@@ -65,7 +65,7 @@ outputs:
   branch_created:
     description: "Name of the branch created (if any)"
   pr_created:
-    description: "URL of PR created (if any)"
+    description: "URL of the PR created (if any)"
 
 runs:
   using: "composite"
