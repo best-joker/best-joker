@@ -25,12 +25,12 @@ jobs:
       id-token: write
       actions: read # Required for Claude to read CI results on PRs
     steps:
-      - name: Debug workflow
+      - name: Debug repository info
         run: |
-          echo "Event name: ${{ github.event_name }}"
-          echo "Repository: ${{ github.repository }}"
-          echo "Ref: ${{ github.ref }}"
-          echo "Actor: ${{ github.actor }}"
+          echo "GitHub repository: ${{ github.repository }}"
+          echo "Repo owner: ${{ github.repository_owner }}"
+          echo "Repo name: ${{ github.event.repository.name }}"
+          echo "Full repo name: ${{ github.repository_owner }}/${{ github.event.repository.name }}"
 
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -42,9 +42,3 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-
-      - name: Debug Claude output
-        if: always()
-        run: |
-          echo "Claude step exit code: ${{ steps.claude.outcome }}"
-          echo "Claude outputs: ${{ steps.claude.outputs }}"
