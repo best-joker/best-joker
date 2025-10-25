@@ -72,6 +72,12 @@ runs:
       with:
         bun-version: latest
 
+    - name: Install Dependencies and Tools
+      shell: bash
+      run: |
+        # Install jq for JSON processing
+        sudo apt-get update && sudo apt-get install -y jq
+
     - name: Install Dependencies
       shell: bash
       run: |
@@ -120,10 +126,32 @@ runs:
         echo "Model: $GLM_MODEL"
         echo "Max turns: $MAX_TURNS"
 
-        # Here we would call the GLM API and process the response
-        # For now, creating a placeholder response
-        RESPONSE="GLM 4.6 has processed your request. This is a placeholder implementation."
-        SUCCESS="true"
+        # Call GLM API
+        echo "Calling GLM API with prompt: ${PROMPT_FILE}"
+
+        # Make API request to GLM
+        RESPONSE=$(curl -s -X POST "${GLM_BASE_URL}chat/completions" \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer ${GLM_API_KEY}" \
+          -d "{
+            \"model\": \"${GLM_MODEL:-glm-4.6}\",
+            \"messages\": [
+              {
+                \"role\": \"user\",
+                \"content\": \"$(cat ${PROMPT_FILE})\"
+              }
+            ],
+            \"stream\": false
+          }" | jq -r '.choices[0].message.content')
+
+        if [ $? -eq 0 ] && [ -n "$RESPONSE" ] && [ "$RESPONSE" != "null" ]; then
+          SUCCESS="true"
+          echo "GLM API call successful"
+        else
+          SUCCESS="false"
+          RESPONSE="抱歉，GLM API调用失败。请检查API密钥和网络连接。"
+          echo "GLM API call failed"
+        fi
 
         # Set outputs
         echo "response<<EOF" >> $GITHUB_OUTPUT

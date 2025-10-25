@@ -100,3 +100,37 @@ jobs:
                   "deny": []
               }
             }
+
+    - name: Comment on Issue or PR
+        if: steps.glm.outputs.success == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 确定评论类型和编号
+          if [ "${{ github.event_name }}" == "issue_comment" ] || [ "${{ github.event_name }}" == "issues" ]; then
+            ISSUE_NUMBER="${{ github.event.issue.number }}"
+            COMMENT_URL="${{ github.api_url }}/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments"
+          elif [ "${{ github.event_name }}" == "pull_request_review_comment" ] || [ "${{ github.event_name }}" == "pull_request_review" ]; then
+            ISSUE_NUMBER="${{ github.event.pull_request.number }}"
+            COMMENT_URL="${{ github.api_url }}/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/comments"
+          else
+            echo "未知事件类型，无法评论"
+            exit 0
+          fi
+
+          # 构建评论内容
+          GLM_RESPONSE="${{ steps.glm.outputs.response }}"
+          COMMENT_BODY="🤖 **GLM 4.6 回复**
+
+          ${GLM_RESPONSE}
+
+          ---
+          *由 @glm 触发*"
+
+          # 创建评论
+          curl -X POST "${COMMENT_URL}" \
+            -H "Authorization: token ${GITHUB_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d "$(echo "{}" | jq --arg body "${COMMENT_BODY}" '.body = $body')"
+
+          echo "评论已发布到 #${ISSUE_NUMBER}"
