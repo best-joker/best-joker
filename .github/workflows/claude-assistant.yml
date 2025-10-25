@@ -1,4 +1,4 @@
-name: Claude Code Assistant
+name: AI Assistant (GLM)
 
 on:
   # 监听Issue评论
@@ -18,7 +18,7 @@ jobs:
     # 只有在包含@claude时才运行
     if: contains(github.event.comment.body, '@claude') || contains(github.event.issue.body, '@claude')
     permissions:
-      contents: write
+      contents: read
       pull-requests: write
       issues: write
     steps:
@@ -30,25 +30,19 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
+      - name: Build GLM Assistant
+        run: |
+          cd .github/actions/glm-assistant
+          npm install
+          npm run prepare
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Run Claude Code Assistant
-        uses: anthropics/claude-code-action@v1
+      - name: Run GLM Assistant
+        uses: ./.github/actions/glm-assistant
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          # 不设置prompt，让Claude自动响应@claude提及
-          claude_args: "--max-turns 3"
-        env:
-          # 设置环境变量，让Claude知道当前上下文
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_REF: ${{ github.ref }}
-          GITHUB_SHA: ${{ github.sha }}
+          glm_api_key: ${{ secrets.GLM_API_KEY }}
+          model: 'glm-4'
+          max_tokens: '2000'
+          github_token: ${{ github.token }}
 
   # 自动代码审查（新PR时触发）
   auto-review:
@@ -66,17 +60,17 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Build GLM Assistant
+        run: |
+          cd .github/actions/glm-assistant
+          npm install
+          npm run prepare
 
       - name: Run Auto Code Review
-        uses: anthropics/claude-code-action@v1
+        uses: ./.github/actions/glm-assistant
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          prompt: "/review"
-          claude_args: "--max-turns 2 --model claude-3-5-sonnet-20241022"
+          glm_api_key: ${{ secrets.GLM_API_KEY }}
+          model: 'glm-4'
+          max_tokens: '3000'
+          github_token: ${{ github.token }}
+          prompt: "请对这个Pull Request进行全面的代码审查，包括代码质量、安全性、性能和最佳实践方面的建议。"
