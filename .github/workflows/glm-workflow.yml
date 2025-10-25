@@ -101,7 +101,7 @@ jobs:
               }
             }
 
-    - name: Comment on Issue or PR
+      - name: Comment on Issue or PR
         if: steps.glm.outputs.success == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
