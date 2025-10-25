@@ -97,7 +97,7 @@ paplay /usr/share/sounds/freedesktop/stereo/dialog-warning.oga
 
 我使用的powershell版本是7.5，所以使用的是`pwsh.exe`命令~ `(ﾉ´ヮ´)ﾉ*:･ﾟ✧`
 
-如果你使用的是powershell 5，那么使用的是`powershell.exe`命令哦！`(´• ω •\`)`
+如果你使用的是powershell 5，那么使用的是`powershell.exe`命令哦！`(´• ω •̀)´`
 
 另外，由于pwsh在Windows主系统中，挂载在`mnt`目录下，所以wsl2中的系统调用可能会感到迟钝感...`(｡•́︿•̀｡)`
 
