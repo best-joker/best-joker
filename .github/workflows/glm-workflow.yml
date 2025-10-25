@@ -41,7 +41,7 @@ jobs:
 
       - name: Run GLM Code Assistant
         id: glm
-        uses: ./ # 使用当前目录作为 action
+        uses: ./ # 使用当前仓库作为action
         with:
           glm_api_key: ${{ secrets.GLM_API_KEY }}
           glm_base_url: ${{ secrets.GLM_BASE_URL || 'https://open.bigmodel.cn/api/paas/v4/' }}
