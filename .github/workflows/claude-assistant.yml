@@ -1,0 +1,82 @@
+name: Claude Code Assistant
+
+on:
+  # 监听Issue评论
+  issue_comment:
+    types: [created]
+  # 监听PR评论
+  pull_request_review_comment:
+    types: [created]
+  # 监听PR主体评论（讨论区）
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  # 处理@claude提及
+  handle-mentions:
+    runs-on: ubuntu-latest
+    # 只有在包含@claude时才运行
+    if: contains(github.event.comment.body, '@claude') || contains(github.event.issue.body, '@claude')
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Claude Code Assistant
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # 不设置prompt，让Claude自动响应@claude提及
+          claude_args: "--max-turns 3"
+        env:
+          # 设置环境变量，让Claude知道当前上下文
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_SHA: ${{ github.sha }}
+
+  # 自动代码审查（新PR时触发）
+  auto-review:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'opened'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Auto Code Review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: "/review"
+          claude_args: "--max-turns 2 --model claude-3-5-sonnet-20241022"
