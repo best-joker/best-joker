@@ -1,0 +1,143 @@
+name: "GLM Code Action"
+description: "Run GLM 4.6 AI in GitHub Actions for Chinese developers"
+branding:
+  icon: "bot"
+  color: "blue"
+
+inputs:
+  # GLM Code arguments
+  prompt:
+    description: "The prompt to send to GLM (mutually exclusive with prompt_file)"
+    required: false
+    default: ""
+  prompt_file:
+    description: "Path to a file containing the prompt to send to GLM (mutually exclusive with prompt)"
+    required: false
+    default: ""
+  settings:
+    description: "GLM Code settings as JSON string or path to settings JSON file"
+    required: false
+    default: ""
+
+  # Action settings
+  glm_args:
+    description: "Additional arguments to pass directly to GLM CLI (e.g., '--max-turns 3 --mcp-config /path/to/config.json')"
+    required: false
+    default: ""
+
+  # Authentication settings
+  glm_api_key:
+    description: "GLM API key from Zhipu AI (required)"
+    required: true
+  glm_base_url:
+    description: "GLM API base URL (optional, defaults to https://open.bigmodel.cn/api/paas/v4/)"
+    required: false
+    default: "https://open.bigmodel.cn/api/paas/v4/"
+
+  # Trigger settings
+  trigger_phrase:
+    description: "Phrase that triggers GLM response (default: @glm)"
+    required: false
+    default: "@glm"
+
+  # Optional settings
+  use_node_cache:
+    description: "Whether to use Node.js dependency caching (set to true only for Node.js projects with lock files)"
+    required: false
+    default: "false"
+  max_turns:
+    description: "Maximum number of conversation turns"
+    required: false
+    default: "10"
+  model:
+    description: "GLM model to use (default: glm-4.6)"
+    required: false
+    default: "glm-4.6"
+
+outputs:
+  response:
+    description: "GLM's response"
+  success:
+    description: "Whether the action succeeded"
+  branch_created:
+    description: "Name of the branch created (if any)"
+  pr_created:
+    description: "URL of the PR created (if any)"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Bun Runtime
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+
+    - name: Install Dependencies
+      shell: bash
+      run: |
+        if [ "${{ inputs.use_node_cache }}" == "true" ] && [ -f "package-lock.json" ]; then
+          echo "cacheHit=true" >> $GITHUB_OUTPUT
+          npm ci
+        elif [ "${{ inputs.use_node_cache }}" == "true" ] && [ -f "yarn.lock" ]; then
+          echo "cacheHit=true" >> $GITHUB_OUTPUT
+          yarn install --frozen-lockfile
+        elif [ "${{ inputs.use_node_cache }}" == "true" ] && [ -f "pnpm-lock.yaml" ]; then
+          echo "cacheHit=true" >> $GITHUB_OUTPUT
+          pnpm install --frozen-lockfile
+        else
+          echo "cacheHit=false" >> $GITHUB_OUTPUT
+          bun install
+        fi
+
+    - name: Run GLM Code
+      id: glm
+      shell: bash
+      env:
+        GLM_API_KEY: ${{ inputs.glm_api_key }}
+        GLM_BASE_URL: ${{ inputs.glm_base_url }}
+        GLM_MODEL: ${{ inputs.model }}
+        TRIGGER_PHRASE: ${{ inputs.trigger_phrase }}
+        MAX_TURNS: ${{ inputs.max_turns }}
+      run: |
+        # Create a temporary directory for our work
+        WORK_DIR=$(mktemp -d)
+        echo "Working in $WORK_DIR"
+
+        # Create the prompt file
+        if [ -n "${{ inputs.prompt_file }}" ]; then
+          PROMPT_FILE="${{ inputs.prompt_file }}"
+        elif [ -n "${{ inputs.prompt }}" ]; then
+          PROMPT_FILE="$WORK_DIR/prompt.txt"
+          echo "${{ inputs.prompt }}" > "$PROMPT_FILE"
+        else
+          echo "Error: Either prompt or prompt_file must be provided"
+          exit 1
+        fi
+
+        # Run the GLM integration
+        echo "Starting GLM 4.6 analysis..."
+        echo "Trigger phrase: $TRIGGER_PHRASE"
+        echo "Model: $GLM_MODEL"
+        echo "Max turns: $MAX_TURNS"
+
+        # Here we would call the GLM API and process the response
+        # For now, creating a placeholder response
+        RESPONSE="GLM 4.6 has processed your request. This is a placeholder implementation."
+        SUCCESS="true"
+
+        # Set outputs
+        echo "response<<EOF" >> $GITHUB_OUTPUT
+        echo "$RESPONSE" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+        echo "success=$SUCCESS" >> $GITHUB_OUTPUT
+
+        # Clean up
+        rm -rf "$WORK_DIR"
+
+    - name: Output Response
+      if: steps.glm.outputs.success == 'true'
+      shell: bash
+      run: |
+        echo "🤖 GLM 4.6 Response:"
+        echo "${{ steps.glm.outputs.response }}"
