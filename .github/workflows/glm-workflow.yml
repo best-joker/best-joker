@@ -81,6 +81,7 @@ jobs:
           trigger_phrase: "@glm"
           max_turns: "10"
           prompt: ${{ steps.extract-prompt.outputs.prompt }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
           # Optional: Configure GLM's behavior with CLI arguments
           glm_args: |
