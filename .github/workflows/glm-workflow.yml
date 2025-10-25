@@ -39,6 +39,38 @@ jobs:
         run: |
           bun install
 
+      - name: Extract Prompt from GitHub Event
+        id: extract-prompt
+        run: |
+          # 根据事件类型提取触发内容
+          if [ "${{ github.event_name }}" == "issue_comment" ]; then
+            COMMENT_BODY="${{ github.event.comment.body }}"
+            # 移除触发短语，获取实际指令
+            PROMPT=$(echo "$COMMENT_BODY" | sed "s/@glm//g" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+          elif [ "${{ github.event_name }}" == "pull_request_review_comment" ]; then
+            COMMENT_BODY="${{ github.event.comment.body }}"
+            PROMPT=$(echo "$COMMENT_BODY" | sed "s/@glm//g" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+          elif [ "${{ github.event_name }}" == "issues" ]; then
+            ISSUE_BODY="${{ github.event.issue.body }}"
+            ISSUE_TITLE="${{ github.event.issue.title }}"
+            if [[ "$ISSUE_TITLE" == *"@glm"* ]]; then
+              PROMPT=$(echo "$ISSUE_TITLE" | sed "s/@glm//g" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+            elif [[ "$ISSUE_BODY" == *"@glm"* ]]; then
+              PROMPT=$(echo "$ISSUE_BODY" | sed "s/@glm//g" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+            else
+              PROMPT="$ISSUE_TITLE"
+            fi
+          elif [ "${{ github.event_name }}" == "pull_request_review" ]; then
+            REVIEW_BODY="${{ github.event.review.body }}"
+            PROMPT=$(echo "$REVIEW_BODY" | sed "s/@glm//g" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+          else
+            PROMPT="请分析当前的GitHub事件并提供帮助"
+          fi
+
+          # 输出prompt供后续步骤使用
+          echo "prompt=$PROMPT" >> $GITHUB_OUTPUT
+          echo "Extracted prompt: $PROMPT"
+
       - name: Run GLM Code Assistant
         id: glm
         uses: ./ # 使用当前仓库作为action
@@ -48,6 +80,7 @@ jobs:
           model: ${{ secrets.GLM_MODEL || 'glm-4.6' }}
           trigger_phrase: "@glm"
           max_turns: "10"
+          prompt: ${{ steps.extract-prompt.outputs.prompt }}
 
           # Optional: Configure GLM's behavior with CLI arguments
           glm_args: |
