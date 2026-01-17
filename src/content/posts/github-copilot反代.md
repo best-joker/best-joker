@@ -3,8 +3,8 @@ title: github-copilot反代
 published: 2026-01-17
 description: ''
 image: ''
-tags: []
-category: ''
+tags: [Claude code,GitHub copilot,反代]
+category: '技术分享'
 draft: false 
 lang: ''
 ---
@@ -42,4 +42,4 @@ copilot-api.cmd check-usage
 copilot在vscode中的上下文似乎是被限制在了`128K`，那么copilot-api反代出来的claude应该也是有这个限制的`(＃°Д°)`。
 
 > [!important]
-> 给项目原作者点个star吧，我只是发现并分享了它`(｡･ω･｡)ﾉ♡`·
+    给项目原作者点个star吧，我只是发现并分享了它`(｡･ω･｡)ﾉ♡`·
