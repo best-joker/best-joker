@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/best-joker"><img src="https://github-readme-stats.vercel.app/api?username=best-joker&hide_border=true&show_icons=true&locale=cn" alt="best-joker的GitHub统计信息"></a>
+  <a href="https://github.com/best-joker"><img src="https://github-readme-stats-rb3z64g3r-best-jokers-projects.vercel.app/api?username=best-joker&show_icons=true&hide_border=true&locale=cn" alt="best-joker的GitHub统计信息"></a>
 </p>
 
 <h3 align="center">努力学习编程中 (ノ｀Д)ノ</h3>
