@@ -3,7 +3,7 @@ title: github-copilot反代
 published: 2026-01-17
 description: ''
 image: ''
-tags: [Claude code,GitHub copilot,反代]
+tags: [Claude code,GitHub copilot,反代,AI]
 category: '技术分享'
 draft: false 
 lang: ''
