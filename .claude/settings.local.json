@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir \"C:\\\\Users\\\\17775\\\\Desktop\\\\program\\\\code\\\\web\\\\best-joker-blog\\\\public\\\\fonts\" 2>nul; copy \"C:\\\\Users\\\\17775\\\\Desktop\\\\program\\\\code\\\\github-project\\\\迁移后准备\\\\one_more_things\\\\Font\\\\Xiaolai-Regular.woff2\" \"C:\\\\Users\\\\17775\\\\Desktop\\\\program\\\\code\\\\web\\\\best-joker-blog\\\\public\\\\fonts\\\\Xiaolai-Regular.woff2\" && echo 复制成功)",
+      "Bash(mkdir -p \"/mnt/c/Users/17775/Desktop/program/code/web/best-joker-blog/public/fonts\")",
+      "Bash(cp \"/mnt/c/Users/17775/Desktop/program/code/github-project/迁移后准备/one_more_things/Font/Xiaolai-Regular.woff2\" \"/mnt/c/Users/17775/Desktop/program/code/web/best-joker-blog/public/fonts/Xiaolai-Regular.woff2\")",
+      "Read(//mnt/c/Users/17775/Desktop/program/code/web/best-joker-blog/public/**)"
+    ]
+  }
+}

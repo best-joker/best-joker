@@ -139,6 +139,12 @@ const bannerOffset =
 			let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
 			offset = offset - offset % 4;
 			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
+
+			// Load the font preference from local storage
+			const font = localStorage.getItem('font') || 'default';
+			if (font === 'xiaolai') {
+				document.documentElement.classList.add('font-xiaolai');
+			}
 		</script>
 		<style define:vars={{
 			configHue,
@@ -176,7 +182,11 @@ const bannerOffset =
 }
 
 html {
-	font-family: 'Roboto', 'Xiaolai', sans-serif;
+	font-family: 'Roboto', system-ui, sans-serif;
+}
+
+html.font-xiaolai {
+	font-family: 'Xiaolai', sans-serif;
 }
 
 @tailwind components;

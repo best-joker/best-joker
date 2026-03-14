@@ -59,3 +59,22 @@ export function setTheme(theme: LIGHT_DARK_MODE): void {
 export function getStoredTheme(): LIGHT_DARK_MODE {
 	return (localStorage.getItem("theme") as LIGHT_DARK_MODE) || DEFAULT_THEME;
 }
+
+export type FontMode = "default" | "xiaolai";
+
+export function getFont(): FontMode {
+	return (localStorage.getItem("font") as FontMode) || "default";
+}
+
+export function setFont(font: FontMode): void {
+	localStorage.setItem("font", font);
+	applyFontToDocument(font);
+}
+
+export function applyFontToDocument(font: FontMode): void {
+	if (font === "xiaolai") {
+		document.documentElement.classList.add("font-xiaolai");
+	} else {
+		document.documentElement.classList.remove("font-xiaolai");
+	}
+}
