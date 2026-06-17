@@ -40,8 +40,9 @@ best-joker-blog/
 - `chore:` 构建过程或辅助工具的变动
 
 ## 内容管理
-- 博客文章存放在`src/content/blog/`目录
-- 使用Front Matter定义文章元数据
+- 博客文章存放在`src/content/posts/`目录
+- 新建文章：`pnpm new-post -- <文件名>`（脚本位于`scripts/new-post.js`，自动生成当天日期和front matter模板）
+- 使用Front Matter定义文章元数据（字段以`src/content/config.ts`的schema为准）
 - 支持Markdown和MDX格式
 
 ## 性能优化
